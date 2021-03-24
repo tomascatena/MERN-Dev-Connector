@@ -3,6 +3,8 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const User = require('../../models/User');
 
@@ -60,7 +62,22 @@ router.post(
       await user.save();
 
       // Return jsonwebtoken
-      res.send('User registered');
+      // Mongoose use an abstraction for the object id, so is not necessary to use _id
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: 360000 },
+        (error, token) => {
+          if (error) throw error;
+          res.status(201).json({ token });
+        }
+      );
     } catch (error) {
       console.error(error);
       res.status(500).send('Server error');
