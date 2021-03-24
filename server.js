@@ -1,14 +1,17 @@
 const express = require('express');
 const connectDB = require('./config/db');
 
-if (process.env.NODE_ENV !== 'production') {
-  const colors = require('colors');
-}
+const morgan = require('morgan');
+const colors = require('colors');
 
 const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// Init Middleware
+app.use(express.json({ extended: false }));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.send('API Running'.green));
 

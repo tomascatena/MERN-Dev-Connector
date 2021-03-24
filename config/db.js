@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
 
-if (process.env.NODE_ENV !== 'production') {
-  const colors = require('colors');
-}
-
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     });
     console.log('MongoDB Connected...'.brightYellow.underline);
   } catch (error) {
