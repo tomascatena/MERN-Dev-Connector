@@ -8,6 +8,7 @@ import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
+import EditProfile from './components/profile-form/EditProfile';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -45,6 +46,11 @@ const App = () => {
                 exact
                 path="/create-profile"
                 component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfile}
               />
             </Switch>
           </section>
