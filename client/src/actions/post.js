@@ -6,6 +6,7 @@ import {
   POST_ERROR,
   UPDATE_LIKES,
   ADD_POST,
+  GET_POST,
 } from './types';
 
 // Get posts
@@ -36,6 +37,7 @@ export const addLike = (postId) => async (dispatch) => {
       type: UPDATE_LIKES,
       payload: { postId, likes: res.data },
     });
+    dispatch(getPosts());
   } catch (error) {
     dispatch({
       type: POST_ERROR,
@@ -56,6 +58,7 @@ export const removeLike = (postId) => async (dispatch) => {
       type: UPDATE_LIKES,
       payload: { postId, likes: res.data },
     });
+    dispatch(getPosts());
   } catch (error) {
     dispatch({
       type: POST_ERROR,
@@ -108,6 +111,25 @@ export const addPost = (formData) => async (dispatch) => {
     });
 
     dispatch(setAlert('Post Created', 'success'));
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      palyoad: {
+        mag: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get post
+export const getPost = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/posts/${postId}`);
+    dispatch({
+      type: GET_POST,
+      payload: res.data,
+    });
   } catch (error) {
     dispatch({
       type: POST_ERROR,

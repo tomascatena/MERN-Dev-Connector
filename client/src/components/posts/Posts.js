@@ -21,8 +21,8 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
       </p>
       <PostForm />
       <div className="posts">
-        {posts.map((post) => {
-          return <PostItem key={post._id} post={post} />;
+        {posts.map((post, index) => {
+          return <PostItem key={`${post._id}${index}`} post={post} />;
         })}
       </div>
     </Fragment>
