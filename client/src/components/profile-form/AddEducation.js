@@ -70,7 +70,7 @@ const AddEducation = ({ addEducation, history }) => {
             value={fieldofstudy}
             onChange={(e) => onChange(e)}
             type="text"
-            placeholder="fieldofstudy"
+            placeholder="Field of study"
             name="fieldofstudy"
           />
         </div>
