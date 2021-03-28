@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
 const PrivateRoute = ({
   component: Component,
@@ -9,16 +10,22 @@ const PrivateRoute = ({
   ...rest
 }) => {
   return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!isAuthenticated || (!isAuthenticated && !loading)) {
-          return <Redirect to="/login" />;
-        } else {
-          return <Component {...props} />;
-        }
-      }}
-    />
+    <Fragment>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Route
+          {...rest}
+          render={(props) => {
+            if (!isAuthenticated || (!isAuthenticated && !loading)) {
+              return <Redirect to="/login" />;
+            } else {
+              return <Component {...props} />;
+            }
+          }}
+        />
+      )}
+    </Fragment>
   );
 };
 
